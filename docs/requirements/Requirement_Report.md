@@ -1,207 +1,427 @@
-# 1. Title Page
-**Project Title**: AI-Powered University Helpdesk Chatbot
-**Document Type**: Requirement Report
-**Project Type**: Academic Software Engineering Project
-**Date**: September 10, 2026
+# Software Requirements Specification
+Requirement Report for
+## AI Chatbot for University Helpdesk
+IEEE-Style Requirements Document
+
+Version 1.0
+
+Prepared by
+Aman Gupta - 202401100100035
+Amar Dwivedi – 202401100100036
+Abhishek Goswami – 202401100100011
+Abhay Pratap singh – 202401100100006
+
+KIET Deemed To Be University
+Branch: Computer Science (CS) — B.Tech 3rd Year
+September 2026
 
 ---
 
-# 2. Document Information
-**Document Name**: Requirement_Report.md
-**Version**: 1.0
-**Description**: High-level requirements and scope for the AI-Powered University Helpdesk Chatbot system.
+## Revision History
+| Version | Date | Author | Reason for Change |
+|---|---|---|---|
+| 1.0 | September 2026 | Project Team | Initial IEEE-style requirement report including requirements elicitation, functional requirements, non functional requirements, business rules and analysis models. |
 
 ---
 
-# 3. Project Overview
-The "AI-Powered University Helpdesk Chatbot" is an intelligent software system designed to assist university students by providing immediate, accurate answers to university-related inquiries using natural language processing (NLP). The chatbot serves as a centralized knowledge access point for campus policies, academic schedules, administrative processes, and general student queries.
+## Table of Contents
+* 1. Introduction
+  * 1.1 Purpose
+  * 1.2 Document Conventions
+  * 1.3 Intended Audience and Reading Suggestions
+  * 1.4 Product Scope
+  * 1.5 References
+* 2. Overall Description
+  * 2.1 Product Perspective
+  * 2.2 Product Functions
+  * 2.3 User Classes and Characteristics
+  * 2.4 Operating Environment
+  * 2.5 Design and Implementation Constraints
+  * 2.6 User Documentation
+  * 2.7 Assumptions and Dependencies
+* 3. Requirements Elicitation
+  * 3.1 Elicitation Objectives
+  * 3.2 Stakeholders
+  * 3.3 Elicitation Techniques
+  * 3.4 Elicited Requirements
+  * 3.5 Requirement Prioritization
+  * 3.6 Requirement Validation
+* 4. External Interface Requirements
+  * 4.1 User Interfaces
+  * 4.2 Hardware Interfaces
+  * 4.3 Software Interfaces
+  * 4.4 Communications Interfaces
+* 5. Functional Requirements
+  * 5.1 Authentication and Authorization
+  * 5.2 University Knowledge Base Management
+  * 5.3 Student Query and Conversation Management
+  * 5.4 AI/NLP Response Generation
+  * 5.5 Academic and Administrative Information
+  * 5.6 Helpdesk Ticket and Escalation
+  * 5.7 Notifications and Feedback
+  * 5.8 Audit and Administration
+* 6. Non-Functional Requirements
+  * 6.1 Performance
+  * 6.2 Safety
+  * 6.3 Security and Privacy
+  * 6.4 Usability
+  * 6.5 Reliability
+  * 6.6 Maintainability
+  * 6.7 Scalability
+  * 6.8 Traceability and Testability
+* 7. Business Rules
+* 8. Other Requirements
+* Appendix A: Glossary
+* Appendix B: Analysis Models
+* Appendix C: To Be Determined List
+* Requirement Report Summary
 
 ---
 
-# 4. Background
-Universities typically handle a massive volume of student inquiries regarding admissions, examinations, schedules, and administrative policies. Students often face difficulties finding accurate and timely information, as they must navigate complex university websites or wait for responses from administrative staff during business hours. 
+## 1. Introduction
+
+### 1.1 Purpose
+This Software Requirements Specification (SRS) defines the functional and non-functional requirements for an AI Chatbot for University Helpdesk. It specifies the system scope, stakeholders, interfaces, conversational workflows, university knowledge-base management, AI-assisted response generation, human escalation, ticket management, security expectations, constraints, and acceptance-oriented requirements for Version 1.0.
+
+### 1.2 Document Conventions
+Requirements use unique identifiers. FR identifies Functional Requirements, NFR identifies Non-Functional Requirements, and BR identifies Business Rules. Priority values are High, Medium, or Low. The words SHALL and MUST indicate mandatory behavior; SHOULD indicates a recommended behavior. Each requirement is intended to be clear, necessary, feasible and verifiable.
+
+### 1.3 Intended Audience and Reading Suggestions
+This document is intended for students, faculty/staff, helpdesk operators, administrators, project team members, project guides, developers, testers and reviewers. Readers should first review Sections 1–2 for context, Section 3 for requirement elicitation, Section 4 for interfaces, Sections 5–6 for detailed requirements, and Section 7 for business rules.
+
+### 1.4 Product Scope
+The AI Chatbot for University Helpdesk is a web-based conversational support system that provides a single point of access to approved university information. Users can ask natural-language questions about admissions, academics, examinations, fees, attendance, departments, campus services, schedules, policies and common helpdesk procedures. The system retrieves relevant approved information and generates concise responses. If a question is unsupported, ambiguous, low-confidence, or requires human action, the system can guide the user to a human helpdesk and create a tracked ticket.
+
+### 1.5 References
+* IEEE Software Requirements Specification template and organizational structure supplied as the project reference.
+* University-approved notices, FAQs, policies, academic calendars, department information and helpdesk procedures.
+* AI Chatbot for University Helpdesk UML and Data Flow Diagram documentation.
+* Project implementation plan and feature specification.
 
 ---
 
-# 5. Problem Statement
-Currently, students struggle with slow response times from university helpdesks and face difficulty locating scattered information across various department portals. This manual query resolution process is inefficient, causing frustration for students and adding unnecessary workload to the university's administrative staff, particularly during peak periods like admissions and examinations.
+## 2. Overall Description
+
+### 2.1 Product Perspective
+The AI Chatbot is a new self-contained university helpdesk web application. The planned architecture uses a React/Vite frontend, Node.js/Express backend, MongoDB for application data, a university knowledge base for approved content, an AI/NLP service for intent detection and response generation, and optional email/SMS/push notification services.
+
+### 2.2 Product Functions
+* University user authentication and role-based authorization.
+* Natural-language chatbot interface and conversation history.
+* University FAQ and knowledge-base retrieval.
+* Intent detection and query classification.
+* Grounded AI response generation using approved university context.
+* Support for admissions, academics, examinations, fees, attendance, departments and campus services.
+* Clarification handling for ambiguous queries.
+* Human helpdesk escalation and ticket creation.
+* Ticket status tracking and notifications.
+* Response feedback and chatbot-quality analytics.
+* Knowledge-base, user, ticket, category and configuration administration.
+* Audit logging of important authentication, access, content and administrative events.
+
+### 2.3 User Classes and Characteristics
+| User Class | Main responsibilities |
+|---|---|
+| Student | Ask university questions, view answers, create/track helpdesk tickets and provide feedback. |
+| Faculty / Staff | Ask academic and administrative questions and submit permitted service requests. |
+| Helpdesk Operator | Review escalated queries, respond to tickets, update status and resolve user issues. |
+| Administrator | Manage users/roles, knowledge-base content, categories, chatbot configuration, analytics and audit information. |
+| Project Guide / Reviewer | Review requirements, workflows, traceability, diagrams, security and demonstrable functionality. |
+
+### 2.4 Operating Environment
+The system is intended to operate through modern desktop, laptop, tablet and smartphone web browsers. The planned server environment consists of Node.js/Express, MongoDB, REST APIs, a configured university knowledge base, an AI/NLP service, and optional notification services.
+
+### 2.5 Design and Implementation Constraints
+* MERN-oriented implementation is preferred for the academic project.
+* Server-side authorization is mandatory for protected operations.
+* Only authorized administrators may publish official university knowledge-base content.
+* AI responses must be grounded in retrieved approved information where applicable.
+* The chatbot SHALL NOT invent official fees, deadlines, policies, examination rules or institutional facts.
+* Sensitive student information shall not be exposed to unauthorized users.
+* External AI services may impose availability, rate, cost and data-handling constraints.
+* Development and demonstrations should use synthetic data where real personal data is not required.
+
+### 2.6 User Documentation
+The project should provide concise instructions for login, asking questions, viewing sources, creating and tracking tickets, providing feedback, helpdesk operator workflows, and administrator knowledge-base management.
+
+### 2.7 Assumptions and Dependencies
+* Users have a supported browser and network connection.
+* Approved university information is available in a maintained knowledge base.
+* MongoDB is available for structured application data.
+* AI/NLP service availability is required for AI-generated responses.
+* Helpdesk staff are available for escalated requests.
+* University policies and FAQs are maintained by authorized personnel.
 
 ---
 
-# 6. Proposed Solution
-The proposed solution is an AI-powered conversational agent that students can interact with using natural language. The chatbot will be backed by a university-specific knowledge base, allowing it to retrieve relevant information dynamically and answer common queries instantly, 24/7. Administrators will be provided with a simplified interface to maintain the knowledge base, ensuring information remains up to date.
+## 3. Requirements Elicitation
+
+### 3.1 Elicitation Objectives
+Requirements elicitation is the process of identifying, collecting, clarifying and documenting what stakeholders need from the university helpdesk chatbot. The objectives are to identify stakeholder goals, understand common helpdesk problems, define required chatbot and ticket functions, identify security and privacy expectations, and convert stakeholder needs into testable requirements.
+
+### 3.2 Stakeholders
+| Stakeholder | Needs / Expectations | Priority |
+|---|---|---|
+| Student | Fast answers, simple language, accurate university information, ticket creation and status tracking. | High |
+| Faculty / Staff | Reliable academic/administrative information and quick routing to responsible offices. | High |
+| Helpdesk Operator | Clear escalated queries, conversation context, ticket queue and status management. | High |
+| Administrator | User/role management, knowledge-base control, analytics and audit information. | High |
+| Project Team | Implementable, testable, secure and maintainable requirements within academic scope. | High |
+| Project Guide / Reviewer | Clear requirements, traceability, diagrams, security considerations and demonstrable functionality. | Medium |
+
+### 3.3 Elicitation Techniques
+| Technique | Application in Project | Expected Output |
+|---|---|---|
+| Stakeholder analysis | Identify students, faculty/staff, helpdesk operators, administrators and academic stakeholders. | Stakeholder needs and priorities. |
+| Interviews / discussion | Discuss common questions, delays, repeated helpdesk requests and escalation problems. | User needs and workflow requirements. |
+| Observation / workflow analysis | Model question-answer, clarification, ticket escalation and resolution workflows. | Process steps and system interactions. |
+| Document analysis | Use university FAQs, notices, policies and the supplied IEEE-style SRS organization. | Structured requirements and source categories. |
+| Use-case analysis | Describe login, ask question, view source, create ticket, respond to ticket and administer knowledge base. | Functional requirements and scenarios. |
+| Requirement prioritization | Classify requirements by importance to the core helpdesk objective. | High/Medium/Low priorities. |
+| Validation and review | Check requirements for consistency, necessity, clarity, feasibility and testability. | Approved/refined requirement set. |
+
+### 3.4 Elicited Requirements
+* Secure authentication and role-based access.
+* Centralized approved university knowledge base.
+* Natural-language question handling and intent classification.
+* Context-aware conversational follow-up.
+* Grounded AI responses with source/reference information where practical.
+* Clarification and safe handling of unsupported or low-confidence questions.
+* Helpdesk ticket creation, assignment, status tracking and escalation.
+* Notifications for important ticket events.
+* User feedback and chatbot-quality analytics.
+* Audit logging, security, privacy, reliability and usability.
+
+### 3.5 Requirement Prioritization
+| Priority | Meaning | AI Chatbot Examples |
+|---|---|---|
+| High | Essential for a usable, secure and demonstrable system. | Authentication, query processing, knowledge retrieval, AI response, escalation, ticketing, security and audit. |
+| Medium | Important supporting functionality. | Conversation history, notifications, feedback, analytics and convenience features. |
+| Low | Optional enhancement that may be implemented later. | Advanced integrations, multilingual expansion and additional channels. |
+
+### 3.6 Requirement Validation
+* **Correct** — represents a genuine stakeholder or system need.
+* **Unambiguous** — has only one reasonable interpretation.
+* **Complete** — contains enough information to implement and test it.
+* **Consistent** — does not conflict with another requirement.
+* **Feasible** — can be implemented within the selected architecture and project scope.
+* **Verifiable** — can be tested or inspected.
+* **Traceable** — has a unique identifier and can be linked to a feature, workflow or analysis model.
 
 ---
 
-# 7. Project Objectives
-- To develop a chatbot capable of understanding and answering student queries using natural language.
-- To centralize scattered university information into a single, manageable knowledge base.
-- To reduce the administrative burden on university staff by automating responses to frequent inquiries.
-- To provide a user-friendly interface for administrators to update the knowledge base.
-- To implement graceful fallback mechanisms when the chatbot cannot confidently answer a question.
+## 4. External Interface Requirements
+
+### 4.1 User Interfaces
+The student/faculty interface shall provide login, chatbot dashboard, conversation area, suggested questions, knowledge/FAQ results, ticket creation, ticket status, notifications and profile areas. Helpdesk operators shall receive a ticket queue, ticket details, conversation context, response and status controls. Administrators shall receive user/role management, knowledge-base management, categories, configuration, analytics and audit screens.
+
+### 4.2 Hardware Interfaces
+No specialized hardware is required for Version 1.0. Standard computers, laptops, tablets and smartphones capable of running a supported web browser are sufficient.
+
+### 4.3 Software Interfaces
+| Software Component | Purpose |
+|---|---|
+| React / Vite | Frontend user interface and conversational chatbot experience. |
+| Node.js / Express | REST API, business logic, authentication, authorization, tickets and administration. |
+| MongoDB | Users, conversations, tickets, feedback, categories and configuration data. |
+| University Knowledge Base | Approved FAQs, notices, policies, schedules, contacts and service information. |
+| AI / NLP Service | Intent detection, contextual processing and response generation. |
+| Notification Service | Email/SMS/push notifications for ticket and service events. |
+
+### 4.4 Communications Interfaces
+Frontend-backend communication shall use secure HTTP(S) REST APIs with JSON request/response data. AI, knowledge-base and notification integrations shall use protected connections and authenticated requests where supported.
 
 ---
 
-# 8. Project Scope
-**In-Scope:**
-- Natural language querying by students on topics such as Admissions, Courses, Exams, Fees, Hostels, Library, etc.
-- Administrator capabilities to add, edit, and delete knowledge base documents.
-- Basic conversation history tracking for the student.
-- Fallback response generation when the chatbot cannot find an answer.
-- Basic dashboard/analytics for administrators to view usage.
+## 5. Functional Requirements
 
-**Out-of-Scope:**
-- Integration with external live student databases (e.g., retrieving a specific student's personal grades, as this adds complex security requirements beyond the scope of this project).
-- Live chat handoff to human agents.
-- Voice/Speech recognition capabilities.
+### 5.1 Authentication and Authorization
+Description and Priority: Authentication and Authorization. Priority: High.
+Stimulus/Response Sequence: User opens portal → enters credentials → authentication → role/permission check → dashboard/chatbot.
+* FR-01: The system shall provide secure login for supported university users.
+* FR-02: The system shall enforce role-based authorization for student, faculty/staff, helpdesk operator and administrator functions.
+* FR-03: Unauthorized requests shall be denied without exposing protected user, ticket or administrative data.
+* FR-04: The system should maintain secure sessions and user profile information.
 
----
+### 5.2 University Knowledge Base Management
+Description and Priority: University Knowledge Base Management. Priority: High.
+Stimulus/Response Sequence: Administrator creates/updates content → content is validated/published → chatbot can retrieve current approved content.
+* FR-05: Administrators shall create, update, publish and archive approved university information.
+* FR-06: Knowledge-base entries shall support categories such as admissions, academics, examinations, fees, attendance, departments and campus services.
+* FR-07: Published entries shall retain source, category and update information.
+* FR-08: Archived or unpublished information shall not be presented as current official information.
+* FR-09: The system should support search/retrieval of relevant knowledge-base entries for chatbot queries.
 
-# 9. Stakeholders
-- **Students**: Primary end-users interacting with the chatbot for information.
-- **System Administrators / University Staff**: Users responsible for updating and maintaining the chatbot's knowledge base.
-- **Project Evaluation Committee / Faculty**: Academic evaluators assessing the software engineering project.
+### 5.3 Student Query and Conversation Management
+Description and Priority: Student Query and Conversation Management. Priority: High.
+Stimulus/Response Sequence: User enters natural-language query → validation → intent classification/retrieval → answer or clarification → conversation continues or escalates.
+* FR-10: The chatbot shall accept natural-language questions.
+* FR-11: The system shall identify or classify the likely intent/category of a query.
+* FR-12: The system shall retrieve relevant approved information for supported questions.
+* FR-13: The chatbot shall support relevant follow-up questions within the same conversation.
+* FR-14: The system shall provide clarification prompts when a query is ambiguous.
+* FR-15: The system should maintain conversation history for authorized users.
 
----
+### 5.4 AI/NLP Response Generation
+Description and Priority: AI/NLP Response Generation. Priority: High.
+Stimulus/Response Sequence: Query → intent/context analysis → knowledge retrieval → AI generation → grounding/confidence check → response or escalation.
+* FR-16: The AI service shall generate responses using retrieved university context where applicable.
+* FR-17: The system shall preserve relevant conversational context for follow-up questions.
+* FR-18: Responses shall be concise, understandable and appropriate for university users.
+* FR-19: The system shall provide source/reference information where practical for factual university answers.
+* FR-20: Unsupported or low-confidence questions shall trigger clarification or human escalation rather than fabricated answers.
+* FR-21: AI/service failure shall display an explicit failure state rather than an invented answer.
 
-# 10. Stakeholder Requirements
+### 5.5 Academic and Administrative Information
+Description and Priority: Academic and Administrative Information. Priority: High.
+Stimulus/Response Sequence: User asks service-related question → category identified → approved information retrieved → response displayed.
+* FR-22: The system shall support queries about academic procedures, courses and department contacts where such information is available.
+* FR-23: The system shall support examination schedules, procedures and FAQs using approved sources.
+* FR-24: The system shall support admissions, fee and administrative FAQs using approved sources.
+* FR-25: The system shall provide relevant office/contact information for queries requiring direct university assistance.
+* FR-26: Personalized university information shall only be shown after appropriate authentication and authorization.
 
-| ID | Requirement | Description | Priority |
-| :--- | :--- | :--- | :--- |
-| SR-01 | 24/7 Information Access | Students require access to university information outside of standard working hours. | Must Have |
-| SR-02 | Accurate Responses | Stakeholders require the system to provide correct information based exclusively on the university knowledge base. | Must Have |
-| SR-03 | Easy Content Management | Administrators require a straightforward interface to update knowledge without coding knowledge. | Must Have |
-| SR-04 | System Feedback Loop | Students should be able to provide simple feedback on whether a response was helpful. | Should Have |
-| SR-05 | Usage Visibility | Administrators should be able to see basic metrics (e.g., total queries, common topics) to understand student needs. | Could Have |
+### 5.6 Helpdesk Ticket and Escalation
+Description and Priority: Helpdesk Ticket and Escalation. Priority: High.
+Stimulus/Response Sequence: Query unresolved/needs action → ticket created → queue/operator assignment → operator response → status update → notification → resolution.
+* FR-27: Users shall be able to create a helpdesk ticket from the chatbot when required.
+* FR-28: Each ticket shall receive a unique ticket ID.
+* FR-29: Tickets shall contain requester, category, description, status, timestamps and relevant conversation context.
+* FR-30: Helpdesk operators shall view, respond to and update assigned tickets.
+* FR-31: Users shall be able to track ticket status where permitted.
+* FR-32: The system shall escalate unresolved or action-requiring requests to the appropriate helpdesk queue.
 
----
+### 5.7 Notifications and Feedback
+Description and Priority: Notifications and Feedback. Priority: Medium.
+Stimulus/Response Sequence: Response/ticket event → notification rule → notification delivered → user feedback where applicable.
+* FR-33: The system should notify users about ticket creation, operator responses, important status changes and closure.
+* FR-34: Users shall be able to rate or provide feedback on chatbot responses.
+* FR-35: Feedback shall be associated with the relevant response or conversation.
+* FR-36: Administrators shall be able to review aggregated feedback.
 
-# 11. User Requirements
-**Student Requirements:**
-- The student must be able to ask questions in plain English.
-- The student must receive an answer within a few seconds.
-- The student must be notified gracefully if the chatbot does not know the answer.
-
-**Administrator Requirements:**
-- The administrator must be able to securely log into the system.
-- The administrator must be able to upload or type text-based information into the knowledge base.
-- The administrator must be able to remove outdated policies from the system.
-
----
-
-# 12. Functional Requirements
-
-| ID | Requirement | Description | Priority |
-| :--- | :--- | :--- | :--- |
-| FR-01 | Submit Query | The system shall allow a Student to input a natural language text query. | Must Have |
-| FR-02 | Generate Response | The system shall generate a text response to the Student's query based on the knowledge base. | Must Have |
-| FR-03 | Conversation Context | The system shall maintain context within a single active conversation session. | Should Have |
-| FR-04 | Conversation History | The system shall allow Students to view their past conversation history. | Could Have |
-| FR-05 | Fallback Handling | The system shall provide a standard fallback message directing the user to a human contact if an answer cannot be found. | Must Have |
-| FR-06 | Admin Authentication | The system shall require Administrators to log in with a username and password. | Must Have |
-| FR-07 | Knowledge Base Addition | The system shall allow Administrators to add new information blocks to the knowledge base. | Must Have |
-| FR-08 | Knowledge Base Modification | The system shall allow Administrators to edit or delete existing information blocks. | Must Have |
-| FR-09 | Submit Feedback | The system shall allow Students to rate a chatbot response (e.g., helpful/not helpful). | Should Have |
-| FR-10 | View Basic Metrics | The system shall display basic usage statistics (total chats, popular topics) to Administrators. | Could Have |
-
----
-
-# 13. Non-Functional Requirements
-
-| ID | Requirement | Description | Priority |
-| :--- | :--- | :--- | :--- |
-| NFR-01 | Performance (Response Time) | The chatbot shall return a response to a query within 5 seconds under normal load. | Must Have |
-| NFR-02 | Usability | The student chat interface shall be intuitive and require no training to use. | Must Have |
-| NFR-03 | Maintainability | The system's codebase shall be well-documented and modular to allow for easy updates by future students. | Must Have |
-| NFR-04 | Security (Admin) | Administrator passwords must be hashed and not stored in plaintext. | Must Have |
-| NFR-05 | Privacy | The system shall not request or store highly sensitive personal student information (e.g., SSN, passwords) in the chat logs. | Must Have |
-| NFR-06 | Scalability | The system should be able to handle up to 50 concurrent student users without severe degradation in response time. | Should Have |
-| NFR-07 | Availability | The system should aim for 99% uptime during the academic evaluation period. | Should Have |
-
----
-
-# 14. Hardware Requirements
-- **Server/Hosting Environment**: Standard cloud instance (e.g., 2vCPUs, 4GB RAM) or equivalent local machine for development and presentation.
-- **Client**: Any device (PC, laptop, smartphone) with an internet connection and a modern web browser.
+### 5.8 Audit and Administration
+Description and Priority: Audit and Administration. Priority: High.
+Stimulus/Response Sequence: Administrator authenticates → authorization check → management/analytics screen → action → audit record.
+* FR-37: Administrators shall manage users, roles and permissions.
+* FR-38: Administrators shall manage knowledge-base content, categories and publication status.
+* FR-39: The system shall provide analytics such as query volume, common intents, unanswered questions, escalation rate and feedback.
+* FR-40: Important authentication, access, ticket, knowledge-base and configuration events shall be auditable.
+* FR-41: Administrative functions shall require administrator authorization.
 
 ---
 
-# 15. Software Requirements
-- **Operating System (Server)**: Linux/Windows.
-- **Client**: Modern web browsers (Chrome, Firefox, Safari, Edge).
-- **Backend/Frontend Frameworks**: To be decided in the design phase (e.g., Python, Node.js, React, HTML/CSS).
-- **Database**: To be decided (e.g., PostgreSQL, MongoDB, SQLite) for storing chat logs and knowledge base texts.
-- **AI/NLP Engine**: Any suitable NLP or Large Language Model API (to be decided during implementation).
+## 6. Non-Functional Requirements
+
+### 6.1 Performance
+| ID | Requirement | Priority |
+|---|---|---|
+| NFR-01 | Normal chatbot and navigation interactions should remain responsive for the expected project workload. | High |
+| NFR-02 | Knowledge-base retrieval should return relevant results within a configured response target under normal conditions. | Medium |
+| NFR-03 | AI generation shall return a result or explicit failure state within a configured service timeout. | High |
+| NFR-04 | Long-running AI, search and ticket operations shall show visible processing status. | Medium |
+Performance requirements concern response time, processing feedback and efficient use of data. The system should avoid unnecessary data transfer and should provide visible status for AI and ticket operations.
+
+### 6.2 Safety
+| ID | Requirement | Priority |
+|---|---|---|
+| NFR-05 | AI output shall be treated as assistance/information and not as an autonomous university authority. | High |
+| NFR-06 | Official policies, deadlines, fees and procedures shall be based on approved sources. | High |
+| NFR-07 | Unsupported or low-confidence answers shall be clarified or escalated rather than fabricated. | High |
+| NFR-08 | Human helpdesk escalation shall be available for requests requiring institutional action or judgment. | High |
+
+### 6.3 Security and Privacy
+| ID | Requirement | Priority |
+|---|---|---|
+| NFR-09 | Protected functions shall require authentication. | High |
+| NFR-10 | Server-side authorization shall be enforced for every protected user, ticket and administrative operation. | High |
+| NFR-11 | Sensitive information shall be protected during transmission and storage according to the deployment environment. | High |
+| NFR-12 | Significant authentication, access, ticket, content and administrative events shall be auditable. | High |
+| NFR-13 | External AI requests should follow data minimization and configured privacy controls. | High |
+
+### 6.4 Usability
+The chatbot should use clear language, simple navigation, visible actions and understandable error messages. Common questions should be answerable without unnecessary navigation. Ticket creation and status tracking should be easy for non-technical users.
+
+### 6.5 Reliability
+Conversation, ticket and approved knowledge-base records should not be silently lost. If AI, search, notification or ticket processing fails, the system should show an explicit error/fallback state and preserve available user input where practical.
+
+### 6.6 Maintainability
+Authentication, chatbot processing, knowledge retrieval, tickets, notifications, administration and audit functions should be organized as modular components/services so they can be independently developed, tested and maintained.
+
+### 6.7 Scalability
+The architecture should support growth in users, conversations, knowledge-base entries, tickets and AI requests without requiring a complete redesign.
+
+### 6.8 Traceability and Testability
+Every functional and non-functional requirement has a unique identifier. Requirements should be traceable to use cases, DFD/UML models, implementation tasks and test cases. Important chatbot answers should also retain a traceable link to their supporting knowledge-base source where practical.
 
 ---
 
-# 16. System Constraints
-- **Budget**: As an academic project, the system must utilize free-tier cloud services, open-source databases, and affordable or free AI APIs.
-- **Time**: The project must be completed within the current academic semester.
-- **AI Limitations**: The AI is not guaranteed to be 100% accurate and may occasionally "hallucinate," hence the strict requirement for it to rely solely on the provided knowledge base.
+## 7. Business Rules
+| Rule ID | Rule | Applicable To |
+|---|---|---|
+| BR-01 | Students, faculty/staff, helpdesk operators and administrators have different privileges. | All users |
+| BR-02 | Protected personal or university account information requires appropriate authentication and authorization. | All users |
+| BR-03 | Only authorized administrators may publish or modify official knowledge-base content. | Administrator |
+| BR-04 | Archived or unpublished information shall not be presented as current official information. | System |
+| BR-05 | AI responses about official university facts should be supported by approved knowledge-base information. | AI/System |
+| BR-06 | If supporting information is unavailable or confidence is insufficient, the chatbot shall clarify or escalate rather than invent an answer. | AI/System |
+| BR-07 | Tickets requiring human action shall be routed to an appropriate helpdesk queue. | System/Helpdesk |
+| BR-08 | Each helpdesk ticket shall have a unique identifier and traceable status history. | System |
+| BR-09 | Important authentication, access, content, ticket and administrative events shall be auditable. | System/Admin |
+| BR-10 | User feedback should be retained for chatbot-quality analysis. | System |
+| BR-11 | Sensitive user information shall not be exposed to unauthorized users or unnecessary external services. | System |
+| BR-12 | Academic demonstrations should use synthetic data where real personal data is not required. | Project Team |
 
 ---
 
-# 17. Assumptions and Dependencies
-- **Assumptions**: 
-  - Students will query the chatbot in English.
-  - The university will provide initial sample data (dummy data for the project) to populate the knowledge base.
-- **Dependencies**: 
-  - The system relies on the availability and uptime of the chosen AI/NLP API or library.
-  - The system requires a stable internet connection on the client side.
+## 8. Other Requirements
+* University-approved information shall be persistently stored in MongoDB or the configured equivalent.
+* Knowledge-base records shall retain source, category and update information.
+* Conversation and ticket records shall be linked to the relevant user where authentication is available.
+* Important ticket status changes and administrative actions should remain traceable.
+* Production SSO/ERP/SIS integration, WhatsApp deployment, multilingual expansion and institutional compliance requirements are outside confirmed Version 1.0 unless separately approved.
+* Production data retention, backup, disaster recovery and institutional privacy policies shall be finalized before real student personal data is used.
 
 ---
 
-# 18. Business Rules
-- Only authorized users with "Administrator" roles can modify the knowledge base.
-- The chatbot must not provide specific academic advice (e.g., "Which elective should I take?") but only objective facts (e.g., "What electives are offered?").
-- If the knowledge base contains conflicting information, the most recently updated entry takes precedence.
+## Appendix A: Glossary
+| Term | Definition |
+|---|---|
+| SRS | Software Requirements Specification. |
+| DFD | Data Flow Diagram. |
+| AI | Artificial Intelligence. |
+| NLP | Natural Language Processing. |
+| RBAC | Role-Based Access Control. |
+| Knowledge Base | Collection of approved university information used to answer supported queries. |
+| Intent | The purpose or category inferred from a user's natural-language query. |
+| Grounded Response | AI-generated response supported by retrieved approved information. |
+| Escalation | Transfer of an unresolved or action-requiring issue to a human helpdesk operator. |
+| Ticket | A tracked helpdesk request with an identifier, status and history. |
+| Conversation Context | Relevant prior messages used to understand a follow-up query. |
+| Audit Log | Record of significant system, access, authentication or administrative events. |
 
 ---
 
-# 19. Requirement Prioritization
-The requirements in Sections 10, 12, and 13 follow the MoSCoW method:
-- **Must Have**: Core functionality required for the academic project submission (e.g., querying, answering, admin updates, fallback).
-- **Should Have**: Important features that add significant value but are not strictly critical (e.g., feedback, context).
-- **Could Have**: "Nice-to-have" features if time permits (e.g., usage metrics, chat history).
+## Appendix B: Analysis Models
+The analysis-model set for the project includes Use Case, Class, Sequence, Activity, Component, Deployment and State Machine diagrams. The DFD set includes Level 0, Level 1 and Level 2 views covering authentication, query processing, knowledge retrieval, AI response generation, ticket escalation, notifications, feedback and administration.
+
+*(Note: Diagrams are referenced but visual contents such as DFD Level 0, 1, and 2 images are part of the original document)*
 
 ---
 
-# 20. Requirement Traceability Overview
-*(A complete traceability matrix will be maintained in later phases. Below is a high-level overview.)*
-- **SR-01 (24/7 Access)** maps to **FR-01, FR-02, NFR-07**.
-- **SR-02 (Accurate Responses)** maps to **FR-05, FR-07, FR-08, NFR-05**.
-- **SR-03 (Content Management)** maps to **FR-06, FR-07, FR-08**.
+## Appendix C: To Be Determined List
+| TBD ID | Item | Status |
+|---|---|---|
+| TBD-01 | Production hosting configuration | To be decided during deployment. |
+| TBD-02 | Final AI model/provider configuration | To be finalized during implementation. |
+| TBD-03 | Final university knowledge-base source/integration | To be finalized with institutional stakeholders. |
+| TBD-04 | SSO / university identity integration | Requires institutional technical access and approval. |
+| TBD-05 | Production data retention and privacy policy | Requires institutional approval before production use. |
+| TBD-06 | Notification provider (email/SMS/push) | To be selected during implementation. |
+| TBD-07 | Advanced integrations such as ERP/SIS/WhatsApp | Outside confirmed Version 1.0 unless separately approved. |
 
 ---
 
-# 21. Risks and Mitigation
+## Requirement Report Summary
+The requirements for the AI Chatbot for University Helpdesk have been organized using the same IEEE style requirement-report structure as the supplied reference. The report includes requirements elicitation, stakeholder identification, prioritization and validation; functional requirements for authentication, knowledge-base management, natural-language query handling, AI response generation, academic and administrative information, ticket escalation, notifications, feedback and administration; and non-functional requirements for performance, safety, security, privacy, usability, reliability, maintainability, scalability, traceability and testability.
 
-| Risk | Impact | Mitigation Strategy |
-| :--- | :--- | :--- |
-| **AI Hallucinations** | High | Strictly prompt/constrain the AI to only use retrieved knowledge base facts. Implement robust fallback handling (FR-05). |
-| **API Rate Limits/Costs** | Medium | Use free-tier services wisely during development; implement request caching if necessary. |
-| **Scope Creep** | Medium | Strictly adhere to the "Out-of-Scope" list; avoid integrating live student databases. |
-| **Data Loss** | Low | Regularly backup the database; rely on dummy data for the academic presentation. |
-
----
-
-# 22. Future Scope
-- Integration with the university's student information system to answer personalized queries (e.g., "What is my GPA?").
-- Multilingual support for international students.
-- Integration into popular messaging platforms (e.g., WhatsApp, Discord, or Microsoft Teams).
-- Voice interaction capabilities.
-
----
-
-# 23. Acceptance Criteria
-The project will be considered successful if:
-1. A user can type a question regarding university policies and receive a relevant answer sourced from the knowledge base.
-2. The chatbot responds with a polite fallback message when asked a question unrelated to the university or outside its knowledge base.
-3. An administrator can successfully log in, add a new piece of information, and the chatbot can immediately answer questions about that new information.
-4. The system operates stably during the academic demonstration without crashing.
-
----
-
-# 24. Conclusion
-This Requirement Report outlines the foundational needs, functional capabilities, and constraints for the AI-Powered University Helpdesk Chatbot. By adhering strictly to these requirements and focusing on the core knowledge-base retrieval features, the development team will deliver a robust, academic-level software engineering project that effectively addresses the problem of student information accessibility.
+The DFD analysis models represent the chatbot as a university helpdesk system connected to users, helpdesk operators and administrators. The core workflow is designed so that approved university information is retrieved before AI response generation, while unsupported or low-confidence requests are clarified or escalated rather than answered with invented institutional information.
